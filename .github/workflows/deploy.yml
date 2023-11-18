@@ -9,6 +9,7 @@ jobs:
   deploy:
     name: Upload to AWS S3
     runs-on: ubuntu-latest
+    environment: production
     permissions:
       id-token: write
       contents: read
@@ -35,7 +36,7 @@ jobs:
           aws-region: ${{ vars.AWS_REGION }}
 
       - name: AWS S3 deploy
-        run: aws s3 sync ${{ vars.NEXTJS_EXPORT_PATH }} s3://${{ vars.PROD_AWS_S3_BUCKET_NAME }}
+        run: aws s3 sync ${{ vars.NEXTJS_EXPORT_PATH }} s3://${{ vars.AWS_S3_BUCKET_NAME }}
       
       - name: AWS CloudFront Invalidate
-        run: aws cloudfront create-invalidation --distribution-id ${{ vars.PROD_AWS_CLOUDFRONT_DISTRIBUTION_ID }} --paths "/*"
+        run: aws cloudfront create-invalidation --distribution-id ${{ vars.AWS_CLOUDFRONT_DISTRIBUTION_ID }} --paths "/*"
