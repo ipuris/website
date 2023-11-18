@@ -1,0 +1,29 @@
+name: Website CD
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    name: Upload to AWS S3
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build
+        run: npm run build
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::517777408829:role/hanpark-website-github-actions-s3
+          aws-region: ap-northeast-2
+
+      - name: AWS S3 deploy
+        run: aws s3 sync ./out s3://hanpark-website
