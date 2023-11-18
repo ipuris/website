@@ -28,15 +28,18 @@ jobs:
 
       - name: Build
         run: npm run build
+      
+      - name: Check environment variables
+        run: echo "arn:aws:iam::${{ vars.AWS_ACCOUNT_ID }}:role/${{ vars.AWS_ROLE_NAME }}"
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: arn:aws:iam::${{ env.AWS_ACCOUNT_ID }}:role/${{ env.AWS_ROLE_NAME }}
-          aws-region: ${{ env.AWS_REGION }}
+          role-to-assume: arn:aws:iam::${{ vars.AWS_ACCOUNT_ID }}:role/${{ vars.AWS_ROLE_NAME }}
+          aws-region: ${{ vars.AWS_REGION }}
 
       - name: AWS S3 deploy
-        run: aws s3 sync ${{ env.NEXTJS_EXPORT_PATH }} s3://${{ env.AWS_S3_BUCKET_NAME }}
+        run: aws s3 sync ${{ vars.NEXTJS_EXPORT_PATH }} s3://${{ vars.AWS_S3_BUCKET_NAME }}
       
       - name: AWS CloudFront Invalidate
-        run: aws cloudfront create-invalidation --distribution-id ${{ env.AWS_CLOUDFRONT_DISTRIBUTION_ID }} --paths "/*"
+        run: aws cloudfront create-invalidation --distribution-id ${{ vars.AWS_CLOUDFRONT_DISTRIBUTION_ID }} --paths "/*"
