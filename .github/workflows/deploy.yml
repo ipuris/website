@@ -31,8 +31,11 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: arn:aws:iam::517777408829:role/hanpark-website-github-actions-s3
-          aws-region: ap-northeast-2
+          role-to-assume: arn:aws:iam::${{ vars.AWS_ACCOUNT_ID }}:role/${{ vars.AWS_ROLE_NAME }}
+          aws-region: ${{ vars.AWS_REGION }}
 
       - name: AWS S3 deploy
-        run: aws s3 sync ./out s3://hanpark-website
+        run: aws s3 sync ${{ vars.NEXTJS_EXPORT_PATH }} s3://${{ vars.PROD_AWS_S3_BUCKET_NAME }}
+      
+      - name: AWS CloudFront Invalidate
+        run: aws cloudfront create-invalidation --distribution-id ${{ vars.PROD_AWS_CLOUDFRONT_DISTRIBUTION_ID }} --paths "/*"
