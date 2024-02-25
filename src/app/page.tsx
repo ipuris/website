@@ -84,7 +84,7 @@ const SectionHeadingDescription = ({
 }: {
   children: React.ReactNode,
 }) => {
-  return <p className="mt-0.5 font-light text-sm md:mt-2 md:text-base">{children}</p>
+  return <p className="mt-0.5 font-light text-sm text-neutral-800 md:mt-2 md:text-base">{children}</p>
 }
 
 const SectionContentsContainer = ({
