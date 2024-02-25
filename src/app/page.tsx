@@ -40,7 +40,7 @@ export default function Home() {
               <h3 className="text-sm font-medium md:text-xl">Publication</h3>
               <ol className={`${styles.paperlist} list-decimal list-outside text-xs text-neutral-800 font-light pl-3 md:text-base md:pl-[1.125rem]`}>
                 <li>
-                  Myeonghoon Ryu, Hongseok Oh, Suji Lee, Han Park, <a className={`${styles.link}`} href="https://arxiv.org/abs/2401.06913" target="_blank">"Microphone Conversion: Mitigating Device Variability in Sound Event Classification,"</a> <span className={`${styles.source}`}><abbr title="IEEE International Conference on Acoustics, Speech and Signal Processing">ICASSP</abbr> 2024</span>
+                  Myeonghoon Ryu, Hongseok Oh, Suji Lee, Han Park, <a className={`${styles.link}`} href="https://arxiv.org/abs/2401.06913" target="_blank">&#34;Microphone Conversion: Mitigating Device Variability in Sound Event Classification,&#34;</a> <span className={`${styles.source}`}><abbr title="IEEE International Conference on Acoustics, Speech and Signal Processing">ICASSP</abbr> 2024</span>
                 </li>
               </ol>
             </div>
