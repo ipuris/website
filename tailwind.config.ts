@@ -10,6 +10,7 @@ const config: Config = {
     extend: {
     },
   },
-  plugins: [],
+  plugins: [
+  ],
 }
 export default config

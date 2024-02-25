@@ -1,0 +1,45 @@
+.researchinterest li {
+    margin-left: 0.2rem;
+}
+.researchinterest li::after {
+    content: ", ";
+}
+.researchinterest li:first-child {
+    margin-left: 0;
+}
+.researchinterest li:last-child::after {
+    content: "";
+}
+
+.paperlist li::marker {
+    font-size: 0.625rem;
+}
+@media (min-width: 768px) {
+    .paperlist li::marker {
+        font-size: 0.75rem;
+    }
+}
+
+.link {
+    font-weight: bolder;
+    text-decoration-style: solid;
+    text-decoration-color: gold;
+    text-decoration-line: underline;
+    text-decoration-thickness: 2px;
+    text-decoration-skip-ink: none;
+    text-underline-offset: 2px;
+}
+.link:hover {
+    position: relative;
+}
+.link:hover::after {
+    position: absolute;
+    left: 0;
+    bottom: 3%;
+    width: 100%;
+    height: 35%;
+    display: block;
+    background-color: gold;
+    content: '';
+    z-index: -1;
+}
