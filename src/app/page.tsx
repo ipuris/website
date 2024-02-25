@@ -9,7 +9,7 @@ const inter = Inter({
 export default function Home() {
   return (
     <main className={`max-w-md mx-auto md:max-w-screen-2xl`}>
-      <h1 className={`${inter.className} fixed top-24 mx-[2rem] text-5xl font-bold md:top-32 md:mx-[4rem] md:text-6xl`}>HAN PARK</h1>
+      <h1 className={`${inter.className} fixed top-24 mx-[2rem] text-5xl font-bold z-50 md:top-32 md:mx-[4rem] md:text-6xl`}>HAN PARK</h1>
       <section className={`h-[150vh] mx-[2rem] mb-8 md:mx-[4rem]`}>
         <div className="sticky top-48 md:top-60">
           <h2 className={`${inter.className} text-lg font-medium md:text-2xl`}>AN ENTREPRENEUR</h2>
