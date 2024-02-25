@@ -24,14 +24,14 @@ export default function Home() {
         <SectionContentsContainer>
           <SectionContents>
             <SectionContentsHeading>Research Interest</SectionContentsHeading>
-            <ul className={`${styles.researchinterest} flex flex-wrap text-xs text-neutral-800 font-light md:text-base`}>
+            <ul className={`${styles.researchinterest} flex flex-wrap text-xs text-neutral-800 dark:text-neutral-200 font-light md:text-base`}>
               <li>usable security</li>
               <li>authentication</li>
             </ul>
           </SectionContents>
           <SectionContents>
             <SectionContentsHeading>Publication</SectionContentsHeading>
-            <ol className={`${styles.paperlist} list-decimal list-outside text-xs text-neutral-800 font-light pl-[0.9375rem] md:text-base md:pl-[1.125rem]`}>
+            <ol className={`${styles.paperlist} list-decimal list-outside text-xs text-neutral-800 dark:text-neutral-200 font-light pl-[0.9375rem] md:text-base md:pl-[1.125rem]`}>
               <li>
                 Myeonghoon Ryu, Hongseok Oh, Suji Lee, Han Park, <a className={`${styles.link}`} href="https://arxiv.org/abs/2401.06913" target="_blank">&#34;Microphone Conversion: Mitigating Device Variability in Sound Event Classification,&#34;</a> <span className={`${styles.source}`}><abbr title="IEEE International Conference on Acoustics, Speech and Signal Processing">ICASSP</abbr> 2024</span>
               </li>
@@ -85,7 +85,7 @@ const SectionHeadingDescription = ({
 }: {
   children: React.ReactNode,
 }) => {
-  return <p className="mt-0.5 font-light text-sm text-neutral-800 md:mt-2 md:text-base">{children}</p>
+  return <p className="mt-0.5 font-light text-sm text-neutral-800 md:mt-2 md:text-base dark:text-neutral-200">{children}</p>
 }
 
 const SectionContentsContainer = ({
