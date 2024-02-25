@@ -51,7 +51,7 @@ export default function Home() {
       
 
       <section className={`h-[150vh] mx-[2rem] mb-8 md:mx-[4rem]`}>
-        <div className="sticky top-60">
+        <div className="sticky top-48 md:top-60">
           <h2 className={`${inter.className} text-lg font-medium md:text-2xl`}>A DEVELOPER</h2>
           <p className="mt-0.5 font-light text-sm md:mt-2 md:text-base">
           </p>
@@ -60,7 +60,7 @@ export default function Home() {
 
 
       <section className={`h-[150vh] mx-[2rem] mb-8 md:mx-[4rem]`}>
-        <div className="sticky top-60">
+        <div className="sticky top-48 md:top-60">
           <h2 className={`${inter.className} text-lg font-medium md:text-2xl`}>A PERSON</h2>
           <p className="mt-0.5 font-light text-sm md:mt-2 md:text-base">
             who loves writing, design, basketball, and photo
