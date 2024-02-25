@@ -8,7 +8,7 @@ const inter = Inter({
 
 export default function Home() {
   return (
-    <main className={`max-h-screen overflow-y-scroll snap-y snap-mandatory`}>
+    <main className={`max-h-screen overflow-y-scroll snap-y snap-mandatory scrollbar-hide`}>
       <h1 className={`${inter.className} fixed top-24 mx-[2rem] text-5xl font-bold z-50 md:top-32 md:mx-[4rem] md:text-6xl`}>HAN PARK</h1>
       
       <Section>
