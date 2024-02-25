@@ -20,6 +20,7 @@ export default function Home() {
       
       <Section>
         <SectionHeading>A RESEARCHER</SectionHeading>
+        <SectionHeadingDescription>who loves computer science and security</SectionHeadingDescription>
         <SectionContentsContainer>
           <SectionContents>
             <SectionContentsHeading>Research Interest</SectionContentsHeading>
