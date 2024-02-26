@@ -5,6 +5,14 @@ import './globals.css'
 
 export const metadata: Metadata = {
   title: 'Han Park',
+  openGraph: {
+    title: 'Han Park',
+    description: 'Han\'s personal website',
+    url: 'https://hanpark.im',
+    siteName: 'Han Park',
+    locale: 'en_US',
+    type: 'website',
+  },
 }
 
 export default function RootLayout({
