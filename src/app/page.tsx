@@ -14,7 +14,7 @@ export default function Home() {
       <Section>
         <SectionHeading>AN ENTREPRENEUR</SectionHeading>
         <SectionHeadingDescription>
-          Co-founder of <a className={`${styles.link}`} href="https://deeplyin.com" target="_blank">Deeply</a>, a sound AI startup
+          Co-founder of <a href="https://deeplyin.com" target="_blank">Deeply</a>, a sound AI startup
         </SectionHeadingDescription>
       </Section>
       
@@ -33,7 +33,7 @@ export default function Home() {
             <SectionContentsHeading>Publication</SectionContentsHeading>
             <ol className={`${styles.paperlist} list-decimal list-outside text-xs text-neutral-800 dark:text-neutral-200 font-light pl-[0.9375rem] md:text-base md:pl-[1.125rem]`}>
               <li>
-                Myeonghoon Ryu, Hongseok Oh, Suji Lee, Han Park, <a className={`${styles.link}`} href="https://arxiv.org/abs/2401.06913" target="_blank">&#34;Microphone Conversion: Mitigating Device Variability in Sound Event Classification,&#34;</a> <span className={`${styles.source}`}><abbr title="IEEE International Conference on Acoustics, Speech and Signal Processing">ICASSP</abbr> 2024</span>
+                Myeonghoon Ryu, Hongseok Oh, Suji Lee, Han Park, <a href="https://arxiv.org/abs/2401.06913" target="_blank">&#34;Microphone Conversion: Mitigating Device Variability in Sound Event Classification,&#34;</a> <span className={`${styles.source}`}><abbr title="IEEE International Conference on Acoustics, Speech and Signal Processing">ICASSP</abbr> 2024</span>
               </li>
             </ol>
           </SectionContents>

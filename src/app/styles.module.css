@@ -19,13 +19,3 @@
         font-size: 0.75rem;
     }
 }
-
-.link {
-    font-weight: bolder;
-    text-decoration-style: solid;
-    text-decoration-color: gold;
-    text-decoration-line: underline;
-    text-decoration-thickness: 2px;
-    text-decoration-skip-ink: none;
-    text-underline-offset: 2px;
-}
