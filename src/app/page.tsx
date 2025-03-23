@@ -35,6 +35,9 @@ export default function Home() {
               <li>
                 Myeonghoon Ryu, Hongseok Oh, Suji Lee, Han Park, <a href="https://arxiv.org/abs/2401.06913" target="_blank">&#34;Microphone Conversion: Mitigating Device Variability in Sound Event Classification,&#34;</a> <span className={`${styles.source}`}><abbr title="IEEE International Conference on Acoustics, Speech and Signal Processing">ICASSP</abbr> 2024</span>
               </li>
+              <li>
+                Myeonghoon Ryu, Hongseok Oh, Suji Lee, Han Park, <a href="https://arxiv.org/abs/2410.18322" target="_blank">&#34;Unified Microphone Conversion: Many-to-Many Device Mapping via Feature-wise Linear Modulation,&#34;</a> <span className={`${styles.source}`}><abbr title="IEEE International Conference on Acoustics, Speech and Signal Processing">ICASSP</abbr> 2025</span>
+              </li>
             </ol>
           </SectionContents>
         </SectionContentsContainer>
