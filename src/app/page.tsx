@@ -33,7 +33,10 @@ export default function Home() {
             <SectionContentsHeading>Publication</SectionContentsHeading>
             <ol className={`${styles.paperlist} list-decimal list-outside text-xs text-neutral-800 dark:text-neutral-200 font-light pl-[0.9375rem] md:text-base md:pl-[1.125rem]`}>
               <li>
-                Myeonghoon Ryu, Hongseok Oh, Suji Lee, Han Park, <a href="https://arxiv.org/abs/2410.18322" target="_blank">&#34;Unified Microphone Conversion: Many-to-Many Device Mapping via Feature-wise Linear Modulation,&#34;</a> <span className={`${styles.source}`}><abbr title="IEEE International Conference on Acoustics, Speech and Signal Processing">ICASSP</abbr> 2025</span>
+                Myeonghoon Ryu, June-Woo Kim, Minseok Oh, Suji Lee, Han Park, <a href="https://arxiv.org/abs/2501.11631" target="_blank">&#34;Noise-Agnostic Multitask Whisper Training for Reducing False Alarm Errors in Call-for-Help Detection,&#34;</a> <span className={`${styles.source}`}><abbr title="IEEE International Conference on Acoustics, Speech and Signal Processing">ICASSP</abbr> 2025</span>
+              </li>
+              <li>
+                Myeonghoon Ryu, Hongseok Oh, Suji Lee, Han Park, <a href="https://arxiv.org/abs/2410.18322" target="_blank">&#34;Unified Microphone Conversion: Many-to-Many Device Mapping via Feature-wise Linear Modulation,&#34;</a> <span className={`${styles.source}`}>Preprint</span>
               </li>
               <li>
                 Myeonghoon Ryu, Hongseok Oh, Suji Lee, Han Park, <a href="https://arxiv.org/abs/2401.06913" target="_blank">&#34;Microphone Conversion: Mitigating Device Variability in Sound Event Classification,&#34;</a> <span className={`${styles.source}`}><abbr title="IEEE International Conference on Acoustics, Speech and Signal Processing">ICASSP</abbr> 2024</span>
