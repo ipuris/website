@@ -14,7 +14,7 @@ export default function Home() {
       <Section>
         <SectionHeading>AN ENTREPRENEUR</SectionHeading>
         <SectionHeadingDescription>
-          Co-founder of <a href="https://deeplyin.com" target="_blank">Deeply</a>, a sound AI startup
+          Co-founder of <a href="https://deeplyinc.com" target="_blank">Deeply</a>, a sound AI startup
         </SectionHeadingDescription>
       </Section>
       
