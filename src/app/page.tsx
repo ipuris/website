@@ -48,6 +48,26 @@ export default function Home() {
         })
       }
 
+      const bounce = (direction: 1 | -1) => {
+        if (isAnimating) return
+        isAnimating = true
+        const current = sections[currentIndex]
+        gsap.fromTo(
+          current,
+          { opacity: 1 },
+          {
+            opacity: 0.7,
+            duration: 0.12,
+            ease: 'power1.out',
+            yoyo: true,
+            repeat: 1,
+            onComplete: () => {
+              isAnimating = false
+            },
+          }
+        )
+      }
+
       const goTo = (index: number) => {
         const now = Date.now()
         if (now - lastTriggerAt < cooldownMs) return
@@ -59,6 +79,7 @@ export default function Home() {
         const nextIndex = Math.min(Math.max(index, 0), total - 1)
         if (nextIndex === currentIndex) {
           isAnimating = false
+          bounce(index > currentIndex ? 1 : -1)
           return
         }
         const current = sections[currentIndex]
