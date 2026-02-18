@@ -27,6 +27,20 @@ export default function Home() {
         pointerEvents: 'none',
       })
 
+      const maxBlur = 8
+      const duration = 0.3
+      // Trigger when current velocity falls below this fraction of the peak.
+      const decelerationRatio = 0.95
+      // Allow an extra mobile transition when velocity exceeds this multiple.
+      const velocityBoostRatio = 1.25
+      // For extra mobile transitions, require this fraction of the base threshold.
+      const touchThresholdRatio = 0.6
+      const isMobile =
+        typeof window !== 'undefined' &&
+        window.matchMedia('(max-width: 768px)').matches
+      const cooldownMs = isMobile ? 50 : 50
+      const wheelThreshold = 80
+
       let currentIndex = 0
       let isAnimating = false
       let lastTriggerAt = 0
@@ -35,13 +49,7 @@ export default function Home() {
       let unlockTimer: number | undefined
       let lastTime = 0
       let peakVelocity = 0
-      const maxBlur = 8
-      const duration = 0.3
-      const isMobile =
-        typeof window !== 'undefined' &&
-        window.matchMedia('(max-width: 768px)').matches
-      const cooldownMs = isMobile ? 50 : 50
-      const wheelThreshold = 80
+      let lastGesturePeak = 0
 
       const showPanel = (index: number) => {
         sections.forEach((section, i) => {
@@ -73,10 +81,14 @@ export default function Home() {
         )
       }
 
-      const goTo = (index: number) => {
+      const goTo = (index: number, force = false) => {
         const now = Date.now()
         if (now - lastTriggerAt < cooldownMs) return
-        if (isAnimating) return
+        if (isAnimating && !force) return
+        if (isAnimating && force) {
+          gsap.killTweensOf(sections)
+          isAnimating = false
+        }
         lastTriggerAt = now
         isAnimating = true
 
@@ -121,29 +133,83 @@ export default function Home() {
       const prevOverflow = document.body.style.overflow
       document.body.style.overflow = 'hidden'
 
+      if (isMobile) {
+        let touchStartY = 0
+        let touchStartTime = 0
+        let touchTriggered = false
+        let touchPeakVelocity = 0
+
+        const onTouchStart = (e: TouchEvent) => {
+          const touch = e.touches[0]
+          touchStartY = touch.clientY
+          touchStartTime = performance.now()
+          touchTriggered = false
+          touchPeakVelocity = 0
+        }
+
+        const onTouchMove = (e: TouchEvent) => {
+          if (!e.touches.length) return
+          const touch = e.touches[0]
+          const now = performance.now()
+          const dy = touchStartY - touch.clientY
+          const dt = Math.max(now - touchStartTime, 8)
+          const velocity = Math.abs(dy / dt)
+          touchPeakVelocity = Math.max(touchPeakVelocity, velocity)
+
+          if (!touchTriggered && Math.abs(dy) >= wheelThreshold) {
+            touchTriggered = true
+            lastGesturePeak = touchPeakVelocity
+            const direction = dy > 0 ? 1 : -1
+            goTo(currentIndex + direction)
+          } else if (
+            touchTriggered &&
+            velocity > lastGesturePeak * velocityBoostRatio &&
+            Math.abs(dy) >= wheelThreshold * touchThresholdRatio
+          ) {
+            lastGesturePeak = velocity
+            const direction = dy > 0 ? 1 : -1
+            goTo(currentIndex + direction, true)
+          }
+        }
+
+        const onTouchEnd = () => {
+          touchTriggered = false
+          touchPeakVelocity = 0
+        }
+
+        window.addEventListener('touchstart', onTouchStart, { passive: true })
+        window.addEventListener('touchmove', onTouchMove, { passive: true })
+        window.addEventListener('touchend', onTouchEnd, { passive: true })
+
+        return () => {
+          window.removeEventListener('touchstart', onTouchStart)
+          window.removeEventListener('touchmove', onTouchMove)
+          window.removeEventListener('touchend', onTouchEnd)
+        }
+      }
+
       Observer.create({
-        type: 'wheel,touch,pointer',
+        type: 'wheel,pointer',
         wheelSpeed: 1,
         tolerance: 0,
         preventDefault: true,
-        onStart: () => {
-          wheelAccum = 0
-          peakVelocity = 0
-          lastTime = performance.now()
-        },
         onChange: (self) => {
           if (isAnimating) return
           if (isLocked) return
-          const delta = self.event?.type?.startsWith('touch')
-            ? -self.deltaY
-            : self.deltaY
+          const delta = self.deltaY
           const now = performance.now()
+          if (!lastTime) {
+            wheelAccum = 0
+            peakVelocity = 0
+            lastTime = now
+          }
           const dt = Math.max(now - lastTime, 8)
           const velocity = Math.abs(delta / dt)
           lastTime = now
           peakVelocity = Math.max(peakVelocity, velocity)
           wheelAccum += delta
-          const decelerating = peakVelocity > 0 && velocity < peakVelocity * 0.6
+          const decelerating =
+            peakVelocity > 0 && velocity < peakVelocity * decelerationRatio
           if (Math.abs(wheelAccum) < wheelThreshold || !decelerating) return
           const direction = wheelAccum > 0 ? 1 : -1
           wheelAccum = 0
