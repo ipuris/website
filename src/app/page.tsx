@@ -35,7 +35,10 @@ export default function Home() {
       let unlockTimer: number | undefined
       const maxBlur = 8
       const duration = 0.3
-      const cooldownMs = 500
+      const isMobile =
+        typeof window !== 'undefined' &&
+        window.matchMedia('(max-width: 768px)').matches
+      const cooldownMs = isMobile ? 200 : 400
       const wheelThreshold = 80
 
       const showPanel = (index: number) => {
