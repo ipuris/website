@@ -216,7 +216,7 @@ const StageSection = ({
   return (
     <section
       ref={sectionRef}
-      className={`absolute inset-0 px-[2rem] md:px-[4rem]`}
+      className={`${styles.stage} absolute inset-0 px-[2rem] md:px-[4rem]`}
     >
       <div className="pt-48 md:pt-64">
         {children}

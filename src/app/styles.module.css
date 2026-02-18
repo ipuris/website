@@ -19,3 +19,7 @@
         font-size: 0.75rem;
     }
 }
+
+.stage {
+    will-change: opacity, filter, transform;
+}
