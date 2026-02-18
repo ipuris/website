@@ -33,12 +33,14 @@ export default function Home() {
       let wheelAccum = 0
       let isLocked = false
       let unlockTimer: number | undefined
+      let lastTime = 0
+      let peakVelocity = 0
       const maxBlur = 8
       const duration = 0.3
       const isMobile =
         typeof window !== 'undefined' &&
         window.matchMedia('(max-width: 768px)').matches
-      const cooldownMs = isMobile ? 200 : 400
+      const cooldownMs = isMobile ? 50 : 50
       const wheelThreshold = 80
 
       const showPanel = (index: number) => {
@@ -124,26 +126,39 @@ export default function Home() {
         wheelSpeed: 1,
         tolerance: 0,
         preventDefault: true,
+        onStart: () => {
+          wheelAccum = 0
+          peakVelocity = 0
+          lastTime = performance.now()
+        },
         onChange: (self) => {
           if (isAnimating) return
           if (isLocked) return
           const delta = self.event?.type?.startsWith('touch')
             ? -self.deltaY
             : self.deltaY
+          const now = performance.now()
+          const dt = Math.max(now - lastTime, 8)
+          const velocity = Math.abs(delta / dt)
+          lastTime = now
+          peakVelocity = Math.max(peakVelocity, velocity)
           wheelAccum += delta
-          if (Math.abs(wheelAccum) < wheelThreshold) return
+          const decelerating = peakVelocity > 0 && velocity < peakVelocity * 0.6
+          if (Math.abs(wheelAccum) < wheelThreshold || !decelerating) return
           const direction = wheelAccum > 0 ? 1 : -1
           wheelAccum = 0
+          peakVelocity = 0
           goTo(currentIndex + direction)
           isLocked = true
           if (unlockTimer) window.clearTimeout(unlockTimer)
           unlockTimer = window.setTimeout(() => {
             isLocked = false
-          }, 800)
+          }, cooldownMs)
         },
         onStop: () => {
           if (isAnimating) return
           wheelAccum = 0
+          peakVelocity = 0
           if (unlockTimer) window.clearTimeout(unlockTimer)
           isLocked = false
         },
