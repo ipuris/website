@@ -1,5 +1,10 @@
+'use client'
+
 import styles from './styles.module.css'
 import { Inter } from 'next/font/google'
+import { useLayoutEffect, useRef } from 'react'
+import gsap from 'gsap'
+import { Observer } from 'gsap/Observer'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -7,56 +12,191 @@ const inter = Inter({
 })
 
 export default function Home() {
+  const sectionRefs = useRef<HTMLElement[]>([])
+
+  useLayoutEffect(() => {
+    gsap.registerPlugin(Observer)
+
+    const sections = sectionRefs.current.filter(Boolean)
+    if (!sections.length) return
+
+    const ctx = gsap.context(() => {
+      gsap.set(sections, {
+        opacity: 0,
+        filter: 'blur(8px)',
+        pointerEvents: 'none',
+      })
+
+      let currentIndex = 0
+      let isAnimating = false
+      let lastTriggerAt = 0
+      let wheelAccum = 0
+      let isLocked = false
+      let unlockTimer: number | undefined
+      const maxBlur = 8
+      const duration = 0.3
+      const cooldownMs = 500
+      const wheelThreshold = 80
+
+      const showPanel = (index: number) => {
+        sections.forEach((section, i) => {
+          if (i === index) {
+            section.style.pointerEvents = 'auto'
+          } else {
+            section.style.pointerEvents = 'none'
+          }
+        })
+      }
+
+      const goTo = (index: number) => {
+        const now = Date.now()
+        if (now - lastTriggerAt < cooldownMs) return
+        if (isAnimating) return
+        lastTriggerAt = now
+        isAnimating = true
+
+        const total = sections.length
+        const nextIndex = Math.min(Math.max(index, 0), total - 1)
+        if (nextIndex === currentIndex) {
+          isAnimating = false
+          return
+        }
+        const current = sections[currentIndex]
+        const next = sections[nextIndex]
+
+        showPanel(nextIndex)
+
+        gsap.to(current, {
+          opacity: 0,
+          filter: `blur(${maxBlur}px)`,
+          duration,
+          ease: 'power1.out',
+        })
+
+        gsap.fromTo(
+          next,
+          { opacity: 0, filter: `blur(${maxBlur}px)` },
+          {
+            opacity: 1,
+            filter: 'blur(0px)',
+            duration,
+            ease: 'power1.out',
+            onComplete: () => {
+              currentIndex = nextIndex
+              isAnimating = false
+            },
+          }
+        )
+      }
+
+      showPanel(currentIndex)
+      gsap.set(sections[currentIndex], { opacity: 1, filter: 'blur(0px)' })
+
+      const prevOverflow = document.body.style.overflow
+      document.body.style.overflow = 'hidden'
+
+      Observer.create({
+        type: 'wheel,touch,pointer',
+        wheelSpeed: 1,
+        tolerance: 0,
+        preventDefault: true,
+        onChange: (self) => {
+          if (isAnimating) return
+          if (isLocked) return
+          const delta = self.event?.type?.startsWith('touch')
+            ? -self.deltaY
+            : self.deltaY
+          wheelAccum += delta
+          if (Math.abs(wheelAccum) < wheelThreshold) return
+          const direction = wheelAccum > 0 ? 1 : -1
+          wheelAccum = 0
+          goTo(currentIndex + direction)
+          isLocked = true
+          if (unlockTimer) window.clearTimeout(unlockTimer)
+          unlockTimer = window.setTimeout(() => {
+            isLocked = false
+          }, 800)
+        },
+        onStop: () => {
+          if (isAnimating) return
+          wheelAccum = 0
+          if (unlockTimer) window.clearTimeout(unlockTimer)
+          isLocked = false
+        },
+      })
+
+      return () => {
+        document.body.style.overflow = prevOverflow
+      }
+    })
+
+    return () => ctx.revert()
+  }, [])
+
   return (
-    <main className={`max-h-screen overflow-y-scroll snap-y snap-mandatory scrollbar-hide`}>
-      <h1 className={`${inter.className} fixed top-24 mx-[2rem] text-5xl font-bold z-50 md:top-32 md:mx-[4rem] md:text-6xl`}>HAN PARK</h1>
-      
-      <Section>
-        <SectionHeading>AN ENTREPRENEUR</SectionHeading>
-        <SectionHeadingDescription>
-          Co-founder of <a href="https://deeplyinc.com" target="_blank">Deeply</a>, a sound AI startup
-        </SectionHeadingDescription>
-      </Section>
-      
-      <Section>
-        <SectionHeading>A RESEARCHER</SectionHeading>
-        <SectionHeadingDescription>who loves computer science and security</SectionHeadingDescription>
-        <SectionContentsContainer>
-          <SectionContents>
-            <SectionContentsHeading>Research Interest</SectionContentsHeading>
-            <ul className={`${styles.researchinterest} flex flex-wrap text-xs text-neutral-800 dark:text-neutral-200 font-light md:text-base`}>
-              <li>usable security</li>
-              <li>authentication</li>
-            </ul>
-          </SectionContents>
-        </SectionContentsContainer>
-      </Section>
-      
+    <main className="relative">
+      <h1
+        className={`${inter.className} fixed top-24 mx-[2rem] text-5xl font-bold z-50 md:top-32 md:mx-[4rem] md:text-6xl`}
+      >
+        HAN PARK
+      </h1>
+      <div className="fixed inset-0">
+        <StageSection sectionRef={(el) => (sectionRefs.current[0] = el!)}>
+          <SectionHeading>AN ENTREPRENEUR</SectionHeading>
+          <SectionHeadingDescription>
+            Co-founder of{' '}
+            <a href="https://deeplyinc.com" target="_blank">
+              Deeply
+            </a>
+            , a sound AI startup
+          </SectionHeadingDescription>
+        </StageSection>
 
-      <Section>
-        <SectionHeading>A DEVELOPER</SectionHeading>
-        
-      </Section>
+        <StageSection sectionRef={(el) => (sectionRefs.current[1] = el!)}>
+          <SectionHeading>A RESEARCHER</SectionHeading>
+          <SectionHeadingDescription>
+            who loves computer science and security
+          </SectionHeadingDescription>
+          <SectionContentsContainer>
+            <SectionContents>
+              <SectionContentsHeading>Research Interest</SectionContentsHeading>
+              <ul
+                className={`${styles.researchinterest} flex flex-wrap text-xs text-neutral-800 dark:text-neutral-200 font-light md:text-base`}
+              >
+                <li>usable security</li>
+                <li>authentication</li>
+              </ul>
+            </SectionContents>
+          </SectionContentsContainer>
+        </StageSection>
 
+        <StageSection sectionRef={(el) => (sectionRefs.current[2] = el!)}>
+          <SectionHeading>A DEVELOPER</SectionHeading>
+        </StageSection>
 
-      <Section>
-        <SectionHeading>A PERSON</SectionHeading>
-        <SectionHeadingDescription>
-          who loves writing, design, and basketball
-        </SectionHeadingDescription>
-      </Section>
-
+        <StageSection sectionRef={(el) => (sectionRefs.current[3] = el!)}>
+          <SectionHeading>A PERSON</SectionHeading>
+          <SectionHeadingDescription>
+            who loves writing, design, and basketball
+          </SectionHeadingDescription>
+        </StageSection>
+      </div>
     </main>
   )
 }
 
-const Section = ({
+const StageSection = ({
   children,
+  sectionRef,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode,
+  sectionRef?: (el: HTMLElement | null) => void,
 }) => {
   return (
-    <section className={`w-full h-screen snap-start px-[2rem] md:px-[4rem]`}>
+    <section
+      ref={sectionRef}
+      className={`absolute inset-0 px-[2rem] md:px-[4rem]`}
+    >
       <div className="pt-48 md:pt-64">
         {children}
       </div>
