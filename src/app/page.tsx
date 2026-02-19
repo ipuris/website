@@ -285,7 +285,7 @@ export default function Home() {
             <SectionContents>
               <SectionContentsHeading>Research Interest</SectionContentsHeading>
               <ul
-                className={`${styles.researchinterest} flex flex-wrap text-xs text-neutral-800 dark:text-neutral-200 font-light md:text-base`}
+                className={`${styles.researchinterest} flex flex-wrap text-xs text-neutral-800 dark:text-neutral-200 font-thin md:text-base`}
               >
                 <li>usable security</li>
                 <li>authentication</li>
@@ -341,7 +341,7 @@ const SectionHeadingDescription = ({
 }: {
   children: React.ReactNode,
 }) => {
-  return <p className="mt-0.5 font-light text-sm text-neutral-800 md:mt-2 md:text-base dark:text-neutral-200">{children}</p>
+  return <p className="mt-0.5 font-thin text-sm text-neutral-800 md:mt-2 md:text-base dark:text-neutral-200">{children}</p>
 }
 
 const SectionContentsContainer = ({
