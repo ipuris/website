@@ -13,6 +13,8 @@ const inter = Inter({
 
 export default function Home() {
   const sectionRefs = useRef<HTMLElement[]>([])
+  const titleRef = useRef<HTMLHeadingElement | null>(null)
+  const glitchTimerRef = useRef<number | undefined>(undefined)
 
   useLayoutEffect(() => {
     gsap.registerPlugin(Observer)
@@ -120,6 +122,23 @@ export default function Home() {
             onComplete: () => {
               currentIndex = nextIndex
               isAnimating = false
+              switch (nextIndex) {
+                case 2: {
+                  if (!titleRef.current) break
+                  if (glitchTimerRef.current) {
+                    window.clearTimeout(glitchTimerRef.current)
+                  }
+                  glitchTimerRef.current = window.setTimeout(() => {
+                    titleRef.current?.classList.remove(styles.tiktokGlitch)
+                    // force reflow to restart animation
+                    void titleRef.current?.offsetWidth
+                    titleRef.current?.classList.add(styles.tiktokGlitch)
+                  }, 500)
+                  break
+                }
+                default:
+                  break
+              }
             },
           }
         )
@@ -228,6 +247,9 @@ export default function Home() {
 
       return () => {
         document.body.style.overflow = prevOverflow
+        if (glitchTimerRef.current) {
+          window.clearTimeout(glitchTimerRef.current)
+        }
       }
     })
 
@@ -237,6 +259,7 @@ export default function Home() {
   return (
     <main className="relative">
       <h1
+        ref={titleRef}
         className={`${inter.className} fixed top-24 mx-[2rem] text-5xl font-bold z-50 md:top-32 md:mx-[4rem] md:text-6xl`}
       >
         HAN PARK
