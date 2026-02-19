@@ -9,5 +9,5 @@ body {
 
 a {
     text-decoration-skip-ink: none;
-    @apply font-medium underline decoration-solid decoration-[#ffd700] underline-offset-2 decoration-1 lg:decoration-2;
+    @apply font-normal underline decoration-solid decoration-[#ffd700] underline-offset-2 decoration-1 lg:decoration-2;
 }

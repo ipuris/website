@@ -1,0 +1,19 @@
+.stage {
+    will-change: opacity, filter, transform;
+}
+
+.researchInterest li {
+    margin-left: 0.2rem;
+}
+
+.researchInterest li::after {
+    content: ", ";
+}
+
+.researchInterest li:first-child {
+    margin-left: 0;
+}
+
+.researchInterest li:last-child::after {
+    content: "";
+}

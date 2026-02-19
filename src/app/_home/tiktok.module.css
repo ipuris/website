@@ -1,29 +1,3 @@
-.researchinterest li {
-    margin-left: 0.2rem;
-}
-.researchinterest li::after {
-    content: ", ";
-}
-.researchinterest li:first-child {
-    margin-left: 0;
-}
-.researchinterest li:last-child::after {
-    content: "";
-}
-
-.paperlist li::marker {
-    font-size: 0.625rem;
-}
-@media (min-width: 768px) {
-    .paperlist li::marker {
-        font-size: 0.75rem;
-    }
-}
-
-.stage {
-    will-change: opacity, filter, transform;
-}
-
 .tiktokGlitch {
     animation: tiktok-glitch-a 0.35s linear 1, tiktok-glitch-b 0.35s linear 1 0.35s;
 }
