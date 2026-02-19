@@ -29,8 +29,6 @@ export default function Home() {
 
       const maxBlur = 8
       const duration = 0.3
-      // Trigger when current velocity falls below this fraction of the peak.
-      const decelerationRatio = 0.95
       // Allow an extra mobile transition when velocity exceeds this multiple.
       const velocityBoostRatio = 1.25
       // For extra mobile transitions, require this fraction of the base threshold.
@@ -38,8 +36,8 @@ export default function Home() {
       const isMobile =
         typeof window !== 'undefined' &&
         window.matchMedia('(max-width: 768px)').matches
-      const cooldownMs = isMobile ? 50 : 50
-      const wheelThreshold = 80
+      const cooldownMs = isMobile ? 50 : 200
+      const wheelThreshold = isMobile ? 50 : 300
 
       let currentIndex = 0
       let isAnimating = false
@@ -208,9 +206,7 @@ export default function Home() {
           lastTime = now
           peakVelocity = Math.max(peakVelocity, velocity)
           wheelAccum += delta
-          const decelerating =
-            peakVelocity > 0 && velocity < peakVelocity * decelerationRatio
-          if (Math.abs(wheelAccum) < wheelThreshold || !decelerating) return
+          if (Math.abs(wheelAccum) < wheelThreshold) return
           const direction = wheelAccum > 0 ? 1 : -1
           wheelAccum = 0
           peakVelocity = 0
