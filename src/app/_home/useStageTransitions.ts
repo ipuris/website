@@ -9,7 +9,7 @@ import {
 } from './constants'
 
 type UseStageTransitionsParams = {
-  sectionRefs: MutableRefObject<HTMLElement[]>
+  sectionRefs: MutableRefObject<Array<HTMLElement | null>>
   titleRef: RefObject<HTMLHeadingElement>
   glitchClassName: string
   onDeveloperEnter?: () => void

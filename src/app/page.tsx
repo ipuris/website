@@ -1,6 +1,11 @@
 'use client'
 
-import { Inter, JetBrains_Mono, Spectral } from 'next/font/google'
+import {
+  Caveat,
+  Inter,
+  JetBrains_Mono,
+  Spectral,
+} from 'next/font/google'
 import { useCallback, useRef, useState } from 'react'
 import { DeveloperTerminal } from './_home/DeveloperTerminal'
 import { SECTION_INDEX } from './_home/constants'
@@ -33,8 +38,14 @@ const jetbrainsMono = JetBrains_Mono({
   display: 'block',
 })
 
+const caveat = Caveat({
+  subsets: ['latin'],
+  weight: ['400', '500', '700'],
+  display: 'block',
+})
+
 export default function Home() {
-  const sectionRefs = useRef<HTMLElement[]>([])
+  const sectionRefs = useRef<Array<HTMLElement | null>>([])
   const titleRef = useRef<HTMLHeadingElement>(null)
   const [developerPlayKey, setDeveloperPlayKey] = useState(0)
 
@@ -50,7 +61,6 @@ export default function Home() {
   })
 
   const setSectionRef = (index: number) => (el: HTMLElement | null) => {
-    if (!el) return
     sectionRefs.current[index] = el
   }
 
@@ -67,7 +77,7 @@ export default function Home() {
 
       <div className="fixed inset-0">
         <StageSection sectionRef={setSectionRef(SECTION_INDEX.ENTREPRENEUR)}>
-          <SectionHeading fontClassName={inter.className}>
+          <SectionHeading className={inter.className}>
             AN ENTREPRENEUR
           </SectionHeading>
           <SectionHeadingDescription>
@@ -81,7 +91,7 @@ export default function Home() {
 
         <StageSection sectionRef={setSectionRef(SECTION_INDEX.DEVELOPER)}>
           <div className={jetbrainsMono.className}>
-            <SectionHeading fontClassName={jetbrainsMono.className}>
+            <SectionHeading className={jetbrainsMono.className}>
               A DEVELOPER
             </SectionHeading>
             <SectionContentsContainer>
@@ -94,7 +104,7 @@ export default function Home() {
 
         <StageSection sectionRef={setSectionRef(SECTION_INDEX.RESEARCHER)}>
           <div className={spectral.className}>
-            <SectionHeading fontClassName={spectral.className}>
+            <SectionHeading className={spectral.className}>
               A RESEARCHER
             </SectionHeading>
             <SectionHeadingDescription>
@@ -115,11 +125,12 @@ export default function Home() {
         </StageSection>
 
         <StageSection sectionRef={setSectionRef(SECTION_INDEX.PERSON)}>
-          <SectionHeading fontClassName={inter.className}>A PERSON</SectionHeading>
-          <SectionHeadingDescription>
+          <SectionHeading className={caveat.className}>A PERSON</SectionHeading>
+          <SectionHeadingDescription className={`${caveat.className} text-base md:text-lg`}>
             who loves writing, design, and basketball
           </SectionHeadingDescription>
         </StageSection>
+
       </div>
     </main>
   )

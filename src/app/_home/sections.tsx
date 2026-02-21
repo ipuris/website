@@ -1,16 +1,27 @@
 import type { ReactNode } from 'react'
 import stageStyles from './stage.module.css'
 
+const mergeClassNames = (...classNames: Array<string | undefined>) =>
+  classNames.filter(Boolean).join(' ')
+
 type StageSectionProps = {
   children: ReactNode
   sectionRef?: (el: HTMLElement | null) => void
+  className?: string
 }
 
-export const StageSection = ({ children, sectionRef }: StageSectionProps) => {
+export const StageSection = ({
+  children,
+  sectionRef,
+  className,
+}: StageSectionProps) => {
   return (
     <section
       ref={sectionRef}
-      className={`${stageStyles.stage} absolute inset-0 px-[2rem] md:px-[4rem]`}
+      className={mergeClassNames(
+        `${stageStyles.stage} absolute inset-0 px-[2rem] md:px-[4rem]`,
+        className
+      )}
     >
       <div className="pt-48 md:pt-64">{children}</div>
     </section>
@@ -19,15 +30,12 @@ export const StageSection = ({ children, sectionRef }: StageSectionProps) => {
 
 type SectionHeadingProps = {
   children: ReactNode
-  fontClassName: string
+  className?: string
 }
 
-export const SectionHeading = ({
-  children,
-  fontClassName,
-}: SectionHeadingProps) => {
+export const SectionHeading = ({ children, className }: SectionHeadingProps) => {
   return (
-    <h2 className={`${fontClassName} text-lg font-medium md:text-2xl`}>
+    <h2 className={mergeClassNames('text-lg font-medium md:text-2xl', className)}>
       {children}
     </h2>
   )
@@ -35,13 +43,20 @@ export const SectionHeading = ({
 
 type SectionHeadingDescriptionProps = {
   children: ReactNode
+  className?: string
 }
 
 export const SectionHeadingDescription = ({
   children,
+  className,
 }: SectionHeadingDescriptionProps) => {
   return (
-    <p className="mt-0.5 text-sm font-thin text-neutral-800 md:mt-2 md:text-base dark:text-neutral-200">
+    <p
+      className={mergeClassNames(
+        'mt-0.5 text-sm font-thin text-neutral-800 md:mt-2 md:text-base dark:text-neutral-200',
+        className
+      )}
+    >
       {children}
     </p>
   )
