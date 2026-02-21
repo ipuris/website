@@ -151,6 +151,7 @@ export const useStageTransitions = ({
 
       showPanel(currentIndex)
       gsap.set(sections[currentIndex], { opacity: 1, filter: 'blur(0px)' })
+      triggerSectionEnterEffect(currentIndex)
 
       const prevOverflow = document.body.style.overflow
       document.body.style.overflow = 'hidden'

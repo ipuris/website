@@ -66,10 +66,10 @@ export default function Home() {
 
   return (
     <main className="relative">
-      <div className="fixed top-24 z-50 mx-[2rem] md:top-32 md:mx-[4rem]">
+      <div className="fixed left-[2rem] top-24 z-50 md:left-[4rem] md:top-32">
         <h1
           ref={titleRef}
-          className={`${inter.className} text-5xl font-bold md:text-6xl`}
+          className={`${inter.className} -translate-x-[0.05em] text-6xl font-bold md:text-7xl`}
         >
           HAN PARK
         </h1>
@@ -80,7 +80,7 @@ export default function Home() {
           <SectionHeading className={inter.className}>
             AN ENTREPRENEUR
           </SectionHeading>
-          <SectionHeadingDescription>
+          <SectionHeadingDescription className="!text-sm md:!text-base">
             Co-founder of{' '}
             <a href="https://deeplyinc.com" target="_blank" rel="noreferrer">
               Deeply
@@ -91,7 +91,7 @@ export default function Home() {
 
         <StageSection sectionRef={setSectionRef(SECTION_INDEX.DEVELOPER)}>
           <div className={jetbrainsMono.className}>
-            <SectionHeading className={jetbrainsMono.className}>
+            <SectionHeading className={`${jetbrainsMono.className} !font-bold`}>
               A DEVELOPER
             </SectionHeading>
             <SectionContentsContainer>
@@ -125,8 +125,10 @@ export default function Home() {
         </StageSection>
 
         <StageSection sectionRef={setSectionRef(SECTION_INDEX.PERSON)}>
-          <SectionHeading className={caveat.className}>A PERSON</SectionHeading>
-          <SectionHeadingDescription className={`${caveat.className} text-base md:text-lg`}>
+          <SectionHeading className={`${caveat.className} !font-bold`}>
+            A PERSON
+          </SectionHeading>
+          <SectionHeadingDescription className={`${caveat.className} !text-lg md:!text-2xl`}>
             who loves writing, design, and basketball
           </SectionHeadingDescription>
         </StageSection>

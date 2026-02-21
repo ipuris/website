@@ -19,11 +19,11 @@ export const StageSection = ({
     <section
       ref={sectionRef}
       className={mergeClassNames(
-        `${stageStyles.stage} absolute inset-0 px-[2rem] md:px-[4rem]`,
+        `${stageStyles.stage} absolute inset-0 pl-[2rem] pr-[2rem] md:pl-[4rem] md:pr-[4rem]`,
         className
       )}
     >
-      <div className="pt-48 md:pt-64">{children}</div>
+      <div className="pt-56 md:pt-72">{children}</div>
     </section>
   )
 }
@@ -35,7 +35,7 @@ type SectionHeadingProps = {
 
 export const SectionHeading = ({ children, className }: SectionHeadingProps) => {
   return (
-    <h2 className={mergeClassNames('text-lg font-medium md:text-2xl', className)}>
+    <h2 className={mergeClassNames('text-xl font-medium md:text-3xl', className)}>
       {children}
     </h2>
   )
@@ -53,7 +53,7 @@ export const SectionHeadingDescription = ({
   return (
     <p
       className={mergeClassNames(
-        'mt-0.5 text-sm font-thin text-neutral-800 md:mt-2 md:text-base dark:text-neutral-200',
+        'mt-0.5 text-base font-thin text-neutral-800 md:mt-2 md:text-lg dark:text-neutral-200',
         className
       )}
     >
